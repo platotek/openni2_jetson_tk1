@@ -1,0 +1,34 @@
+diff -r -u OpenNI2/Makefile OpenNI2.patch/Makefile
+--- OpenNI2/Makefile	2016-08-09 22:59:05.000000000 +0800
++++ OpenNI2.patch/Makefile	2016-08-09 23:22:16.485711010 +0800
+@@ -159,3 +159,5 @@
+ 
+ # clean is cleaning all projects
+ clean: $(ALL_PROJS_CLEAN)
++core_samples: $(CORE_SAMPLES)
++tools: $(ALL_TOOLS)
+diff -r -u OpenNI2/ThirdParty/PSCommon/BuildSystem/CommonCppMakefile OpenNI2.patch/ThirdParty/PSCommon/BuildSystem/CommonCppMakefile
+--- OpenNI2/ThirdParty/PSCommon/BuildSystem/CommonCppMakefile	2016-08-09 22:59:05.000000000 +0800
++++ OpenNI2.patch/ThirdParty/PSCommon/BuildSystem/CommonCppMakefile	2016-08-09 23:18:27.587299921 +0800
+@@ -95,6 +95,9 @@
+ 	OUTPUT_NAME = $(EXE_NAME)
+ 	# We want the executables to look for the .so's locally first:
+ 	LDFLAGS += -Wl,-rpath ./
++	 ifneq ("$(OSTYPE)","Darwin")
++		LDFLAGS += -lpthread
++	 endif
+ 	OUTPUT_COMMAND = $(CXX) -o $(OUTPUT_FILE) $(OBJ_FILES) $(LDFLAGS)
+ endif
+ ifneq "$(SLIB_NAME)" ""
+diff -r -u OpenNI2/ThirdParty/PSCommon/BuildSystem/Platform.Arm OpenNI2.patch/ThirdParty/PSCommon/BuildSystem/Platform.Arm
+--- OpenNI2/ThirdParty/PSCommon/BuildSystem/Platform.Arm	2016-08-09 22:59:05.000000000 +0800
++++ OpenNI2.patch/ThirdParty/PSCommon/BuildSystem/Platform.Arm	2016-08-09 23:14:11.206075842 +0800
+@@ -1,7 +1,7 @@
+ ifeq "$(CFG)" "Release"
+ 
+     # Hardware specifying flags
+-    CFLAGS += -march=armv7-a -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp #-mcpu=cortex-a8
++    CFLAGS += -march=armv7-a -mtune=cortex-a15 -mfpu=neon-vfpv4 -mfloat-abi=hard
+ 
+     # Optimization level, minus currently buggy optimizing methods (which break bit-exact)
+     CFLAGS += -O3 -fno-tree-pre -fno-strict-aliasing
