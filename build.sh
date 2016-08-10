@@ -1,5 +1,5 @@
-#sudo apt-get install -y g++ python libusb-1.0-0-dev freeglut3-dev doxygen graphviz
-#sudo apt-get install libudev-dev
+sudo apt-get install -y g++ python libusb-1.0-0-dev freeglut3-dev doxygen graphviz
+sudo apt-get install libudev-dev
 if [ ! -d "OpenNI2" ]; then
 	if [ -f preDownloadPackage/OpenNI2.tar.gz ]; then
 		tar fvxz preDownloadPackage/OpenNI2.tar.gz -C ./
